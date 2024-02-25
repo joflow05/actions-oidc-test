@@ -1,5 +1,7 @@
 module "s3" {
   source = "git@github.com:joflow05/s3-module.git//s3-module?ref=v1.0.0"
+Name= Demo
+region= "us-east-1"
 }
 #
 ##Backend configuration
