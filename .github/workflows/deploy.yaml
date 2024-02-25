@@ -1,4 +1,5 @@
-name: Deploy Infrastructure
+name: Deploy Infrastructure Workflow
+
 on:
   workflow_call:
     inputs:
@@ -27,18 +28,28 @@ jobs:
           role-to-assume: "${{ secrets.CI_ROLE }}"
           aws-region: "${{ inputs.aws-region }}"
 
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
       - name: Terraform format
         run: terraform fmt -check
-      - name: init
+
+      - name: Initialize Terraform
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${{ secrets.SSH_KEY_GITHUB_ACTIONS }}"
           terraform init
-      - name: Validate
+
+      - name: Validate Terraform
         run: terraform validate
-      - name: Plan
+
+      - name: Plan Terraform
         run: terraform plan
+
+
+
      ## - name: Apply
-       # run: terraform apply -auto-approve
+       #  run: terraform apply -auto-approve
