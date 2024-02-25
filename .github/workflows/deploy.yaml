@@ -36,8 +36,7 @@ jobs:
 
       - name: Terraform format
         run: terraform fmt -check
-
-      - name: Initialize Terraform
+      - name: init
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${{ secrets.SSH_KEY_GITHUB_ACTIONS }}"
@@ -52,4 +51,4 @@ jobs:
 
 
      ## - name: Apply
-       #  run: terraform apply -auto-approve
+       # run: terraform apply -auto-approve
